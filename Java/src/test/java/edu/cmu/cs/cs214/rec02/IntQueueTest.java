@@ -81,6 +81,33 @@ public class IntQueueTest {
     }
 
     @Test
+    public void testDequeueEmptyQueue() {
+        assertNull(mQueue.dequeue());
+    }
+
+    @Test
+    public void testClear() {
+        mQueue.enqueue(1);
+        assert(mQueue.peek() == 1);
+        mQueue.clear();
+        assertNull(mQueue.peek());
+    }
+
+
+    @Test
+    public void testEnsureCapacity() {
+        int maxCapacity = 10;
+        for (int i = 0; i < maxCapacity; i++) {
+            assertEquals(mQueue.size(), i);
+            mQueue.enqueue(i);
+        }
+        mQueue.dequeue();
+        mQueue.enqueue(1);
+        mQueue.enqueue(2);
+        assertEquals(11, mQueue.size());
+    }
+
+    @Test
     public void testContent() throws IOException {
         InputStream in = new FileInputStream("src/test/resources/data.txt");
         try (Scanner scanner = new Scanner(in)) {
